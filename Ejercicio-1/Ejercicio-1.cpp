@@ -72,9 +72,9 @@ int totalRaised(const int dimCol, const int dimFile, bool matriz[][15])
 
 void matrizInitial(const int dimCol, const int dimFile, bool matriz[][15])
 {
-    for (int i = 0; i < dimFile; i++)
+    for (int i = 0; i < dimCol; i++)
     {
-        for (int j = 0; j < dimCol; j++)
+        for (int j = 0; j < dimFile; j++)
         {
             matriz[i][j] = false;
         }
