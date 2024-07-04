@@ -17,10 +17,108 @@ PISO 3    X
 PISO 4    X     X
 PISO 5    X
 */
-#include<iostream>
+
+/*
+- Contexto: Un consorcio desea controlar la cobranza de las expensas en un edificio de 5 pisos
+donde existen 15 departamentos en cada piso
+- importante valor de expensas $ 3000
+*/
+#include <iostream>
 
 using namespace std;
 
-int main(){
+void matrizInitial(const int, const int, bool[][15]);
+void showingMatrix(const int, const int, bool[][15]);
+void collectionRecord(bool[][15]);
+int totalRaised(const int, const int, bool [][15]);
+
+int main()
+{
+    const int dimColFloor = 5;
+    const int dimFileDpto = 15;
+    bool debtorDepartments[dimColFloor][dimFileDpto];
+
+    // Poniendo todo en falso
+    matrizInitial(dimColFloor, dimFileDpto, debtorDepartments);
+    // Registrando los cobros piso-departamento
+    collectionRecord(debtorDepartments);
+
+    cout << "Mostrando el registro de departamentos deudores: " << endl;
+    showingMatrix(dimColFloor, dimFileDpto, debtorDepartments);
+
+    int quality = totalRaised(dimColFloor, dimFileDpto, debtorDepartments);
+
+    cout<<"Total recaudado: "<<"$"<<quality * 3000<<endl;
+
     return 0;
+}
+
+int totalRaised(const int dimCol, const int dimFile, bool matriz[][15])
+{
+    int cont = 0;
+    for (int i = 0; i < dimCol; i++)
+    {
+        for (int j = 0; j < dimFile; j++)
+        {
+            if (matriz[i][j] == true)
+            {
+                /* cout<<cont<<" "; */
+                cont++;
+            }
+        }
+    }
+    return cont;
+}
+
+void matrizInitial(const int dimCol, const int dimFile, bool matriz[][15])
+{
+    for (int i = 0; i < dimFile; i++)
+    {
+        for (int j = 0; j < dimCol; j++)
+        {
+            matriz[i][j] = false;
+        }
+    }
+}
+
+void showingMatrix(const int dimCol, const int dimFile, bool matriz[][15])
+{
+    for (int i = 0; i < dimCol; i++)
+    {
+        for (int j = 0; j < dimFile; j++)
+        {
+            if (matriz[i][j] == true)
+            {
+                cout << "X ";
+            }
+            else
+            {
+                cout << "0 ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void collectionRecord(bool matriz[][15])
+{
+    int floor;
+    int dpto;
+    cout << "Registro de cobranza: " << endl;
+    cout << "Piso: ";
+    while (cin >> floor && floor != 0)
+    {
+        cout << "Departamento: ";
+        cin >> dpto;
+        if (matriz[floor - 1][dpto - 1] == true)
+        {
+            cout << "Esta departamento ya registrado. Digita otro" << endl;
+        }
+        else
+        {
+            matriz[floor - 1][dpto - 1] = true;
+            cout << "Registrado: " << "piso: " << floor << " departamento: " << dpto << endl;
+        }
+        cout << "Piso: ";
+    }
 }
